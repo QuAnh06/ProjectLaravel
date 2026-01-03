@@ -44,11 +44,12 @@ body {
 .admin i{
     margin-right: 5px;
 }
+
 .dropdown{
     padding-bottom: 5px;
 }
 .custom-dropdown-btn{
-    font-size: 1rem;
+    font-size: 1.1rem;
     border: none;
 }
 
@@ -57,7 +58,7 @@ body {
 
 .custom-body-wrapper {
     display: flex;
-    height: 83rem;
+    min-height: 91.5vh;
 }
 
 .custom-sidebar {
@@ -76,7 +77,7 @@ body {
 .menu-item{
     margin: 1px;
     padding: 14px 20px;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -124,7 +125,7 @@ body {
 
 .custom-offcanvas-sidebar {
     max-width: 60%;
-    width: 220px;
+    width: 210px;
     background-color: white;
 }
 
@@ -154,7 +155,7 @@ body {
 .back{
     text-decoration: none;
     color: var(--primary-color);
-    font-size: 1.1em;
+    font-size: 1.1rem;
     margin-top: 20px;
 }
 
@@ -162,7 +163,7 @@ body {
 .card {
     border-radius: 8px; 
     height: 35rem;
-}
+}                                         
 
 .form-control-lg {
     padding: 1rem 0.75rem;
@@ -170,16 +171,19 @@ body {
 }
 
 .form-label{
-    font-size: 1.1rem;
+    font-size: 1.15rem;
 }
 
+.fw-bold{
+    font-weight: 650 !important;
+}
 .btn-secondary {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     margin-right: 7px;
     margin-left: 5px;
 }
 .btn-primary{
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     margin-right: 7px;
     margin-left: 5px;
 }
@@ -189,9 +193,9 @@ body {
 
 footer{
     text-align: center;
-    padding-right: 60px;
-    padding-top: 12px;
-    padding-bottom: 15px;
+    padding-right: 2.6rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     font-size: 10.5px;
     border-top: 1px solid #dddd;
     background-color: var(--bg-light);
