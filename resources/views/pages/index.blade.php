@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main')
-        <main class="custom-content-area p-4">
+        <main class="custom-content-area py-5 px-4 ">
             <div class="container-fluid">
                 
                 <div class="content-header">

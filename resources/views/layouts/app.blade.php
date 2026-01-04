@@ -19,7 +19,9 @@
         
         @yield('main')
 
-        @yield('app-lists');
+        @yield('home')
+        
+        @yield('app-lists')
 
     </div>
 

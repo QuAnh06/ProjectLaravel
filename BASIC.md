@@ -1,30 +1,41 @@
 # Cấu trúc thư mục trong Laravel 12
 -----
+- Luồng Request: 
+   `Người dùng -> Request -> Middleware -> Controller -> Views -> Người dùng`
 
 ## 1. `app/` : Là nơi chứa **logic cốt lõi** của ứng dụng Laravel.
 
 ### Các thư mục con:
-    - `Http/`: cầu nối giữa **request từ người dùng** và **phản hồi từ ứng dụng**. Gồm 3 phần: Controllers, Middleware, Form Request.
-        
-    #### - `Controllers`: Bộ điều khiển 
-    -- **xử lí request**, gọi model, và trả về response (view hoặc JSON).
-    -- Mỗi Controller đại diện cho 1 chức năng (UserController, ProductController).
-    -- Tạo controller bằng lệnh `php artisan make:controller "UserController"`
+   - `Http/`: cầu nối giữa **request từ người dùng** và **phản hồi từ ứng dụng**. Gồm 3 phần: Controllers, Middleware, Form Request.
 
-    #### - `Middleware`: lớp bảo vệ giữa request và controller
-    -- kiểm tra hoặc can thiệp vào request trước khi nó đến Controller.
-       Ví dụ: xác thực người dùng (auth), kiểm tra quyền (isAdmin), giới hạn truy cập IP,...
-    -- Tạo middleware bằng lệnh `php artisan make:middleware "AuthMiddleware"`
+   #### - `Requests`: kiểm tra dữ liệu đầu vào
+   -- Là nơi xử lí Form Request Validation - kiểm tra dữ liệu người dùng gửi lên (từ form hoặc API).
+      Ví dụ: 'LoginRequest', 'CreateUserRequest'
 
-    #### - `Requests`: kiểm tra dữ liệu đầu vào
-    -- Là nơi xử lí Form Request Validation - kiểm tra dữ liệu người dùng gửi lên (từ form hoặc API).
-        Ví dụ: 'LoginRequest', 'CreateUserRequest'
-    -- Tạo request bằng lệnh `php artisan make:request "LoginRequest"`
-    -------
+   -- Tạo request bằng lệnh `php artisan make:request "LoginRequest"`
 
-    - `Models/`: Nơi đặt các class model, đại diện cho bảng trong CSDL.
 
-    -`Providers/`: Nơi đăng kí các Service Providers (khởi tạo logic hoặc dịch vụ).
+   #### - `Middleware`: lớp bảo vệ giữa request và controller
+   -- kiểm tra hoặc can thiệp vào request trước khi nó đến Controller.
+      Ví dụ: xác thực người dùng (auth), kiểm tra quyền (isAdmin), giới hạn truy cập IP,...
+
+   -- Tạo middleware bằng lệnh `php artisan make:middleware "AuthMiddleware"`
+
+   -- Đăng kí Middeleware : Global, Aliases (folder Middleware), sau đó tích hợp middleware vào `route hoặc controller`
+
+
+
+   #### - `Controllers`: Bộ điều khiển 
+   -- **xử lí request**, gọi model, và trả về response (view hoặc JSON).
+   -- Mỗi Controller đại diện cho 1 chức năng (UserController, ProductController).
+
+   -- Tạo controller bằng lệnh `php artisan make:controller "UserController"`
+
+   -------
+
+   - `Models/`: Nơi đặt các class model, đại diện cho bảng trong CSDL.
+
+   -`Providers/`: Nơi đăng kí các Service Providers (khởi tạo logic hoặc dịch vụ).
 
 ----
 
@@ -41,14 +52,17 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
 - `app.php` : cấu hinh tên app, timezone, ...
 - `database.php` : thông tin kết nối CSDL.
 
+
 ## 4. `database/` - Tất cả liên quan tới dữ liệu
+
 - `migrations/`: quản lí các thay đổi cấu trúc bảng.
 -`seeders/`: thêm dữ liệu mẫu cho bảng.
 -`factories/`: tạo dữ liệu mẫu để test.
     
-    (-- Có thể chạy `php artisan migrate --seed` để tạo bảng và thêm dữ liệu mẫu nhanh chóng.
-     -- Chạy lệnh: `php artisan db:seed` => Chỉ tạo dữ liệu mẫu.
-    )
+ (-- Có thể chạy `php artisan migrate --seed` để tạo bảng và thêm dữ liệu mẫu nhanh chóng.
+
+  -- Chạy lệnh: `php artisan db:seed` => Chỉ tạo dữ liệu mẫu.
+ )
 ----
 
 ## 5. `public/` - Cổng vào của ứng dụng
@@ -76,6 +90,9 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
 - `api.php`: route cho RESTful API.
 - `console.php`: định nghĩa lệnh artisan.
 - `channels.php`: dùng cho Broadcast event qua websocket.
+
+- Tạo routes với tham số: Ví dụ: /users/{id} //Tham số bắt buộc
+                                 /users/{name?}  // Tham số không bắt buộc
 
 (Khi truy cập 1 đường dẫn, Laravel sẽ kiểm tra route ở đây trước).
 
@@ -133,6 +150,7 @@ Thường tuân theo mô hình **MVC (Model-View-Controller)**.
 ### **Ví dụ thực tế: Tạo chức năng "Bài viết" (Post)**
 
 #### **Bước 1️: Tạo Model, Migration và Controller cùng lúc**
+
 ```bash
 php artisan make:model Post -mc
 ```
@@ -145,6 +163,7 @@ php artisan make:model Post -mc
 
 #### **Bước 2️: Định nghĩa Route**
 Mở `routes/web.php` và thêm:
+
 ```php
 use App\Http\Controllers\PostController;
 Route::get('/posts', [PostController::class, 'index']);
@@ -164,3 +183,28 @@ public function index() {
 
 #### **Bước 4️: Tạo giao diện**
 Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách bài viết.
+
+
+###### FLOW REQUEST → RESPONSE TRONG LARAVEL
+🌍 Trình duyệt
+   |
+   v
+📂 public/index.php   (cửa vào duy nhất)
+   |
+   v
+🛂 Middleware         (có được đi tiếp không?)
+   |
+   v
+🗺️ Route              (URL này gọi ai?) (use ...\*Controller) (Route:: )
+   |
+   v
+🎮 Controller         (xử lý logic) (use App\Models\...) (public function ...)
+   |
+   v
+📦 Model / DB         (lấy dữ liệu) (Models\.php)
+   |
+   v
+📤 Response           (HTML / JSON)
+   |
+   v
+🌍 Trình duyệt
