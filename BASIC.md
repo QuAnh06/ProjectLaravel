@@ -21,7 +21,8 @@
 
    -- Tạo middleware bằng lệnh `php artisan make:middleware "AuthMiddleware"`
 
-   -- Đăng kí Middeleware : Global, Aliases (folder Middleware), sau đó tích hợp middleware vào `route hoặc controller`
+   -- Đăng kí Middeleware trong `\bootstrap\app.php`, ;   `Global, Aliases` middeleware.
+      Xử lí logic trong `Middleware`, sau đó tích hợp middleware vào `route hoặc controller`
 
 
 
@@ -37,6 +38,8 @@
 
    -`Providers/`: Nơi đăng kí các Service Providers (khởi tạo logic hoặc dịch vụ).
 
+   - *Resource Controller* : là loại controller có sẵn 7 phương thức khi thao tác `CRUD` (Create, Read, Update, Delete)
+      + `php artisan make:controller UserController --resource`
 ----
 
 ## 2. `bootstrap/` -- Khởi động ứng dụng
@@ -55,8 +58,17 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
 
 ## 4. `database/` - Tất cả liên quan tới dữ liệu
 
-- `migrations/`: quản lí các thay đổi cấu trúc bảng.
+- `migrations/`: quản lí các thay đổi cấu trúc bảng, tạo bảng.
+
+   -- **Illuminate\Database\Schema\Blueprint**
+      *Schema::create()*
+      $table->id()
+      $table->string()
+      $table->text()
+      $table->timestamps()
+
 -`seeders/`: thêm dữ liệu mẫu cho bảng.
+
 -`factories/`: tạo dữ liệu mẫu để test.
     
  (-- Có thể chạy `php artisan migrate --seed` để tạo bảng và thêm dữ liệu mẫu nhanh chóng.
@@ -91,8 +103,13 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
 - `console.php`: định nghĩa lệnh artisan.
 - `channels.php`: dùng cho Broadcast event qua websocket.
 
-- Tạo routes với tham số: Ví dụ: /users/{id} //Tham số bắt buộc
-                                 /users/{name?}  // Tham số không bắt buộc
+- Tạo routes với tham số: Ví dụ: `/users/{id} //Tham số bắt buộc`
+                                 `/users/{name?}  // Tham số không bắt buộc`
+
+- `Route::controller(PageController::class) -> group(function (){`
+      Route::get('/', 'home');
+      Route::get('/', 'index');
+});
 
 (Khi truy cập 1 đường dẫn, Laravel sẽ kiểm tra route ở đây trước).
 
@@ -185,7 +202,7 @@ public function index() {
 Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách bài viết.
 
 
-###### FLOW REQUEST → RESPONSE TRONG LARAVEL
+##### FLOW REQUEST → RESPONSE TRONG LARAVEL
 🌍 Trình duyệt
    |
    v
@@ -201,10 +218,24 @@ Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách
 🎮 Controller         (xử lý logic) (use App\Models\...) (public function ...)
    |
    v
-📦 Model / DB         (lấy dữ liệu) (Models\.php)
+📦 Model / DB         (lấy dữ liệu) (Models\ )
    |
    v
 📤 Response           (HTML / JSON)
    |
    v
 🌍 Trình duyệt
+
+
+-- public function store(Request $request) {
+    $request->validate(['password' => 'required|min:8']); // Dùng Request
+    
+    $user = User::create([ // Dùng Model
+        'name' => $request->name,
+        'password' => Hash::make($request->password), // Dùng Hash
+    ]);
+    
+    Auth::login($user); // Dùng Auth
+    
+    return redirect()->route('home')->with('success', 'Chào mừng!'); // Dùng Redirect + Session
+}

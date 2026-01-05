@@ -15,7 +15,7 @@ class PageController extends Controller // implements HasMiddleware
     //     ];
     // }
 
-    public function showIndex() {
+    public function Index() {
         return view('pages.index');
     }
 
@@ -23,8 +23,8 @@ class PageController extends Controller // implements HasMiddleware
         return view('pages.application-lists');
     }
   
-    public function user() {
-        $users = User::latest()->paginate(10); 
-        return view('pages.user-lists', compact('users'));
-    }
+    // public function Users() {
+    //     $users = User::latest()->paginate(15); 
+    //     return view('pages.user-lists', compact('users'));
+    // }
 }

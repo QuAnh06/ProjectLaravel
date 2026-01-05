@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 
 Route::get('/', function(){
@@ -12,7 +13,6 @@ Route::prefix('/home') -> group(function (){
     
     Route::get('/', function(){
         return view('pages.home');
-        // return 'Home Page';
     })->name('home');
     
     Route::get('/{UserId}', function($UserId) {
@@ -40,7 +40,14 @@ Route::get('/payment-lists', function(){
 //     return view('pages.user-lists', compact('users'));
 // })->name('user-lists');
 
-Route::get('/user-lists', [PageController::class, 'user'])->name('user-lists'); 
+// Route::get('/user-lists', [PageController::class, 'Users'])->name('user-lists'); 
+
+Route::prefix('/user-lists') -> controller(UserController::class) -> group(function (){
+    Route::get('/', 'index') -> name('user-lists');
+    Route::get('/create', 'create') -> name('user-lists.create');
+    Route::post('/store', 'store') -> name('user-lists.store');
+    // Route::post('/', '')
+});
 
 
 Route::get('lang/{locale}', function ($locale) {
@@ -49,3 +56,6 @@ Route::get('lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('lang.switch');
+
+
+

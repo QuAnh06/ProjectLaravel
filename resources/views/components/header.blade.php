@@ -33,12 +33,12 @@
                 <div class="dropdown">
                     <button class="btn btn-sm dropdown-toggle custom-dropdown-btn" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('assets/images/' . $languages[$currentLocale]['flag']) }}" width="17" class="rounded-sm" alt="{{ $languages[$currentLocale]['name'] }}">
+                        <img src="{{ asset('assets/images/' . $languages[$currentLocale]['flag']) }}" width="17" class="rounded-sm" >
 
                         <span>{{ $languages[$currentLocale]['name'] }}</span>
                     </button>
 
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLang">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         @foreach($languages as $key => $lang)
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-3 {{ $currentLocale == $key ? 'active' : '' }}" href="{{ route('lang.switch', $key) }}">

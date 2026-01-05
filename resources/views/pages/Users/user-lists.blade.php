@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
-@section('home')
+@section('user-lists')
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h4 fw-bold mb-0">Danh sách Người dùng</h2>
-        <a href="" class="btn btn-primary shadow-sm d-flex align-items-center gap-2 fs-0.25">
+        <h2 class="h2 fw-bold mb-0">Danh sách Người dùng</h2>
+        <a href="{{ route('user-lists.create') }}" class="btn btn-primary shadow-sm d-flex align-items-center gap-2 fs-0.25">
             <i class="fas fa-plus"></i> Thêm mới
         </a>
     </div>
 
-    <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-body p-0"> <div class="p-3 border-bottom d-flex justify-content-between align-items-center bg-light rounded-top-4">
+    <div class="card shadow-sm border-0 py-0 mx-4" style="height: auto;">
+        <div class="card-body p-4"> 
+            <div class="d-flex justify-content-between mb-3">
                 <div class="input-group w-25">
                     <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
                     <input type="text" class="form-control border-start-0 ps-0" placeholder="Tìm tên, email...">
@@ -59,7 +60,7 @@
                                     <a href="" class="btn btn-sm btn-light border" title="Sửa">
                                         <i class="fas fa-edit text-primary"></i>
                                     </a>
-                                    <button class="btn btn-sm btn-light border text-danger" title="Xóa" onclick="confirmDelete({{ $user->id }})">
+                                    <button class="btn btn-sm btn-light border text-danger" title="Xóa">  {{--onclick="confirmDelete({{ $user->id }})">--}}
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -77,9 +78,9 @@
                 </table>
             </div>
 
-            <div class="p-3 border-top">
+            {{-- <div class="p-3 border-top">
                 {{ $users->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

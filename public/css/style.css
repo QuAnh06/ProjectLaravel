@@ -95,13 +95,13 @@ body {
 .menu-item:hover{
     background-color: rgb(208, 243, 255);
     border-radius: 5px;
-    color: #0707ae;
+    color: #0b88b9;
     transform: translateX(3px);
 }
 .menu-item:hover a{
     background-color: rgb(208, 243, 255);
     border-radius: 5px;
-    color: #0707ae;
+    color: #1616c8;
 }
 
 /* Active Menu */
@@ -109,16 +109,16 @@ body {
 .menu-item.active .menu-link{
     background-color: rgb(208, 243, 255);
     border-radius: 5px;
-    color: #0707ae;
+    color: #1616c8;
     transform: translateX(3px);
 }
-
+/* 
 .menu-item.active .menu-link{
     color: #0707ae;
-}
+} */
 
 .menu-item.active i{
-    color: #0707ae;
+    color: #1616c8;
 }
 
 /* Responsive Offcanvas Sidebar */ 
@@ -194,7 +194,7 @@ body {
 footer{
     text-align: center;
     padding-right: 2.6rem;
-    padding-top: 1%;
+    padding-top: 0.85%;
     padding-bottom: 1%;
     font-size: 1.1rem;
     border-top: 1px solid #dddd;
@@ -228,12 +228,7 @@ footer{
     }
 } */
 
-/* Home Page */
-
-.table-hover tbody tr:hover {
-    background-color: #f8faff;
-    transition: 0.2s;
-}
+/* User-lists Page */
 
 .badge {
     font-weight: 500;
