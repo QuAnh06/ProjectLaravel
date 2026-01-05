@@ -5,7 +5,7 @@
                 <i class="fas fa-bars fa-lg"></i>
             </button>
     
-            <a class="logo" href="#">SSO Server</a>
+            <a class="logo" href="{{ route('index') }}">SSO Server</a>
     
             <div class="d-flex align-items-center ms-auto header-icons-group">
     
