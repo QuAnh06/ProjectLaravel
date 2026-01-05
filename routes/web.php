@@ -46,7 +46,7 @@ Route::prefix('/user-lists') -> controller(UserController::class) -> group(funct
     Route::get('/', 'index') -> name('user-lists');
     Route::get('/create', 'create') -> name('user-lists.create');
     Route::post('/store', 'store') -> name('user-lists.store');
-    // Route::post('/', '')
+    // Route::delete('/', '')
 });
 
 
