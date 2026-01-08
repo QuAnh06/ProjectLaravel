@@ -24,40 +24,19 @@
         @yield('app-lists')
 
         @yield('user-lists.create')
+        
     </div>
 
     @include('components.footer')
 
-    @if (!Route::is('user-lists.create')) 
+    @if (!Route::is('user-lists.create') && !Route::is('user-lists.edit')) 
         <script src="{{ asset('js/main.js') }}"></script>
     @endif
 
-    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
-    
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <template id="create-success">
-    <swal-title>
-        Thành công!
-    </swal-title>
-    <swal-icon type="success" color="#28a745"></swal-icon>
-    <swal-button type="confirm" color="#0d6efd">
-        Đồng ý
-    </swal-button>
-    <swal-param name="timer" value="3000" /> <swal-param name="allowEscapeKey" value="true" />
-    <swal-param name="customClass" value='{ "popup": "border-radius-15" }' />
-    </template>
-
-    <script>
-        @if(session('create-success'))
-            Swal.fire({
-                template: "#create-success",
-                text: "{{ session('success') }}",
-            });
-        @endif
-    </script>
-
+    
+    @stack('scripts')
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>

@@ -58,7 +58,7 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
 
 ## 4. `database/` - Tất cả liên quan tới dữ liệu
 
-- `migrations/`: quản lí các thay đổi cấu trúc bảng, tạo bảng.
+- `migrations/`: quản lí các thay đổi cấu trúc bảng, tạo bảng (định nghĩa cấu trúc bảng).
 
    -- **Illuminate\Database\Schema\Blueprint**
       *Schema::create()*
@@ -67,13 +67,20 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
       $table->text()
       $table->timestamps()
 
+   -- Chạy lệnh: `php artisan make:migration add_status_to_users_table` : thêm cột vào bảng
+                -> `php artisan migrate` : để cập nhật vào database.
+
+   -- Chạy lệnh: `php artisan make:model Name -m` để tạo bảng (Migration), tạo `Models\`
+
+
 -`seeders/`: thêm dữ liệu mẫu cho bảng.
 
 -`factories/`: tạo dữ liệu mẫu để test.
     
  (-- Có thể chạy `php artisan migrate --seed` để tạo bảng và thêm dữ liệu mẫu nhanh chóng.
 
-  -- Chạy lệnh: `php artisan db:seed` => Chỉ tạo dữ liệu mẫu.
+  -- Chạy lệnh: `php artisan db:seed` => đổ dữ liệu mẫu vào database.
+                `php artisan db:seed --class=UserSeeder`
  )
 ----
 
@@ -202,20 +209,19 @@ public function index() {
 Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách bài viết.
 
 
-##### FLOW REQUEST → RESPONSE TRONG LARAVEL
-🌍 Trình duyệt
+#### FLOW REQUEST → RESPONSE TRONG LARAVEL
+🌍 Trình duyệt: Nhấn nút "Lưu".
    |
    v
-📂 public/index.php   (cửa vào duy nhất)
+📂 Route: Kiểm tra URL /users (POST) -> Chuyển đến UserController@store. (use ...\*Controller) (Route:: )
    |
    v
-🛂 Middleware         (có được đi tiếp không?)
+🛂 Middleware: Kiểm tra đăng nhập (nếu có), kiểm tra CSRF Token (bảo mật).
    |
    v
-🗺️ Route              (URL này gọi ai?) (use ...\*Controller) (Route:: )
-   |
-   v
-🎮 Controller         (xử lý logic) (use App\Models\...) (public function ...)
+🗺️ Controller (Store): (use App\Models\...) (public function ...)
+   🛡️ Validation: Nếu nhập sai (thiếu email, sai status) -> Quay lại View kèm lỗi ($errors).
+   📦 Model: Nếu nhập đúng -> Gọi `User::create($request->all())`.
    |
    v
 📦 Model / DB         (lấy dữ liệu) (Models\ )
@@ -239,3 +245,5 @@ Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách
     
     return redirect()->route('home')->with('success', 'Chào mừng!'); // Dùng Redirect + Session
 }
+
+#### 

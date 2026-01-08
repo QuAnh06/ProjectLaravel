@@ -8,18 +8,6 @@
             <a class="logo" href="{{ route('index') }}">SSO Server</a>
     
             <div class="d-flex align-items-center ms-auto header-icons-group">
-    
-                <!-- <div class="dropdown me-3 d-none d-sm-inline-block">
-                    <button class="btn btn-sm dropdown-toggle custom-dropdown-btn" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src=" {{ asset('assets/images/vn.png') }} "  width = 10px > Tiếng Việt
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item active" href="#"> <img src=" {{ asset('assets/images/vn.png') }} "  width = 10px > Tiếng Việt </a></li>
-                        <li><a class="dropdown-item" href="#"> <img src=" {{ asset('assets/images/united-kingdom.png') }} " width = 10px > English </a></li>
-                        <li><a class="dropdown-item" href="#"> <img src=" {{ asset('assets/images/japan.png') }} " width = 10px > Japanese </a></li>
-                    </ul>
-                </div> -->
 
                 @php
                 $currentLocale = session('locale', 'vi');
@@ -61,18 +49,24 @@
                 <div class="dropdown">
                     <button class="btn btn-sm dropdown-toggle custom-dropdown-btn" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="admin"><i class="fa-regular fa-user"></i></span>System Admin
+                                <span class="admin"><i class="fa-regular fa-user"></i></span> {{ Auth::user()->name }} 
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <h6 class="dropdown-header">System Admin</h6>
+                            <h6 class="dropdown-header">{{ Auth::user()->name }}</h6>
                         </li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Cài đặt tài khoản</a></li>
                         <li>
                             <hr>
                         </li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-out-alt me-2"></i> Đăng
-                                xuất</a></li>
+                        <li>
+                            @auth
+                                <a class="dropdown-item text-danger" href="{{ route('logout') }}" data-turbo="false">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
+                                </a>
+
+                            @endauth
+                        </li>
                     </ul>
                 </div>
             </div>

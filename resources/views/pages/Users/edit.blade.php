@@ -1,26 +1,31 @@
 @extends('layouts.app')
 
+
 @section('user-lists.create')
-<div class="container-fluid py-5" style="background-color: #ffffff; min-height: 100vh; color: #000000;">
+    <div class="container-fluid py-5" style="background-color: #ffffff; min-height: 100vh; color: #000000;">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             
             <div class="mb-4 border-bottom pb-3">
-                <h2 class="fw-bold text-dark">Thêm Người Dùng Mới</h2>
-                <p class="text-muted">Nhập thông tin chi tiết để tạo tài khoản mới trong hệ thống.</p>
+                <h2 class="fw-bold text-dark">Sửa thông tin người dùng</h2>
+                <p class="text-muted">Nhập thông tin chi tiết để cập nhật tài khoản trong hệ thống.</p>
             </div>
 
             <div class="card border shadow-sm" style="background-color: #ffffff; border-radius: 12px;">
                 <div class="card-body p-4">
-                    <form action="{{ route('user-lists.store') }}" method="POST">
+                    <form action="{{ route('user-lists.update',['id' => $user->id])}}" method="POST" >
                         @csrf
                         
+                        {{-- <input type="hidden" name = "_method" value = "PUT"> --}}
+                        @method('PUT')
+
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <label class="form-label fw-semibold text-dark">Họ và tên</label>
                                 <input type="text" name="name" 
-                                       class="form-control custom-input-white @error('name') is-invalid @enderror" 
-                                       placeholder="Ví dụ: Nguyễn Văn A" value="{{ old('name') }}">
+                                       class="form-control custom-input-white 
+                                       @error('name') is-invalid @enderror" 
+                                       placeholder="Ví dụ: Nguyễn Văn A" value="{{ $user->name }}">
                                 
                                 @error('name') 
                                     <div class="invalid-feedback"> {{ $message }} </div> 
@@ -28,32 +33,37 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label fw-semibold text-dark">Địa chỉ Email</label>
+                                <label class="form-label fw-semibold text-dark">Email</label>
                                 <input type="email" name="email" 
-                                       class="form-control custom-input-white @error('email') is-invalid @enderror" 
-                                       placeholder="nva@example.com" value="{{ old('email') }}">
+                                       class="form-control custom-input-white 
+                                       @error('email') is-invalid @enderror" 
+                                       placeholder="nva@example.com" value="{{ $user->email }}">
                                 
                                 @error('email') 
                                     <div class="invalid-feedback">{{ $message }}</div> 
                                 @enderror
                             </div>
 
-                            <div class="col-md-6 mb-4">
+                            {{-- <div class="col-md-6 mb-4">
                                 <label class="form-label fw-semibold text-dark">Mật khẩu</label>
                                 <input type="password" name="password" 
-                                       class="form-control custom-input-white @error('password') is-invalid @enderror" 
+                                       class="form-control custom-input-white 
+                                       @error('password') is-invalid @enderror" 
                                        placeholder="Tối thiểu 8 ký tự">
                                 
                                 @error('password') 
                                     <div class="invalid-feedback">{{ $message }}</div> 
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-6 mb-4">
                                 <label class="form-label fw-semibold text-dark">Vai trò</label>
                                 <select name="role" class="form-select custom-input-white">
-                                    <option value="user" selected>Người dùng thường</option>
-                                    <option value="admin">Quản trị viên</option>
+                                    <option value="user"  {{ $user->role == 'user' ? 'selected' : '' }}> 
+                                        Người dùng</option>
+
+                                    <option value="admin"  {{ $user->role == 'admin' ? 'selected' : '' }}>
+                                        Quản trị viên</option>
                                 </select>
                             </div>
                         </div>
@@ -63,7 +73,7 @@
                                 Hủy bỏ
                             </a>
                             <button type="submit" class="btn btn-primary px-4 py-2" style="border-radius: 8px; background-color: #0d6efd;">
-                                <i class="fas fa-save me-2"></i> Lưu người dùng
+                                <i class="fas fa-save me-2"></i> Cập nhật
                             </button>
                         </div>
                     </form>
@@ -98,4 +108,5 @@
         font-size: 0.95rem;
     }
 </style>
+
 @endsection

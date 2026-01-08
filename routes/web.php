@@ -1,39 +1,54 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function(){
-    return view('pages.index');
-})->name('index');
-
-Route::prefix('/home') -> group(function (){
-    
-    Route::get('/', function(){
-        return view('pages.home');
-    })->name('home');
-    
-    Route::get('/{UserId}', function($UserId) {
-        return 'User ' . $UserId;
-    });
+    return redirect()->route('login');
 });
-// ->middleware('AuthMiddleware::class');
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+ 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/index', function(){
+        return view('pages.index');
+    })->name('index');
+
+    Route::prefix('/home') -> group(function (){
+        
+        Route::get('/', function(){
+            return view('pages.home');
+        })->name('home');
+        
+        Route::get('/{UserId}', function($UserId) {
+            return 'User ' . $UserId;
+        });
+    });
+    // ->middleware('AuthMiddleware::class');
 
 
-Route::get('/application-lists', function(){
-    return view('pages.application-lists');
-})->name('app-lists');
+    Route::get('/application-lists', function(){
+        return view('pages.application-lists');
+    })->name('app-lists');
 
 
-Route::get('/service-lists', function(){
-    return view('pages.service-lists');
-})->name('service-lists');
+    Route::get('/service-lists', function(){
+        return view('pages.service-lists');
+    })->name('service-lists');
 
-Route::get('/payment-lists', function(){
-    return view('pages.payment-lists');
-})->name('payment-lists');
+    Route::get('/payment-lists', function(){
+        return view('pages.payment-lists');
+    })->name('payment-lists');
+
+});
 
 // Route::get('/user-lists', function(){
 //     $users = User::latest()->paginate(10); 
@@ -42,11 +57,13 @@ Route::get('/payment-lists', function(){
 
 // Route::get('/user-lists', [PageController::class, 'Users'])->name('user-lists'); 
 
-Route::prefix('/user-lists') -> controller(UserController::class) -> group(function (){
+Route::middleware(['auth']) -> prefix('/user-lists') -> controller(UserController::class) -> group(function (){
     Route::get('/', 'index') -> name('user-lists');
     Route::get('/create', 'create') -> name('user-lists.create');
-    Route::post('/store', 'store') -> name('user-lists.store');
-    // Route::delete('/', '')
+    Route::post('/', 'store') -> name('user-lists.store');
+    Route::get('/edit/{id}', 'edit') -> name('user-lists.edit');
+    Route::put('/{id}', 'update') -> name('user-lists.update');
+    Route::get('/{id}/delete', 'destroy') -> name('user-lists.destroy');
 });
 
 

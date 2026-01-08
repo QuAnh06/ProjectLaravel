@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('user-lists')
+
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="h2 fw-bold mb-0">Danh sách Người dùng</h2>
@@ -48,21 +49,21 @@
                             </td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                @if($user->is_active)
-                                    <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">Hoạt động</span>
+                                @if(Auth::check() && $user->id === Auth::user()->id)
+                                    <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">Online</span>
                                 @else
-                                    <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">Khóa</span>
+                                    <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">Offline</span>
                                 @endif
                             </td>
                             <td class="text-muted">{{ $user->created_at->format('d/m/Y') }}</td>
                             <td class="text-end pe-4">
                                 <div class="btn-group">
-                                    <a href="" class="btn btn-sm btn-light border" title="Sửa">
+                                    <a href="{{ route('user-lists.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-light border" title="Sửa">
                                         <i class="fas fa-edit text-primary"></i>
                                     </a>
-                                    <button class="btn btn-sm btn-light border text-danger" title="Xóa">  {{--onclick="confirmDelete({{ $user->id }})">--}}
+                                    <a href="{{ route('user-lists.destroy', ['id' => $user->id]) }}" class="btn btn-sm btn-light border text-danger" title="Xóa" onclick="confirmDelete({{ $user->id }})"> {{--onclick="confirmDelete({{ $user->id }})">--}}
                                         <i class="fas fa-trash"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -83,5 +84,76 @@
             </div> --}}
         </div>
     </div>
-</div>
+</div>  
+
 @endsection
+
+<template id="create-success">
+    <swal-title>
+        Thành công!
+    </swal-title>
+    <swal-icon type="success" color="#28a745"></swal-icon>
+    <swal-button type="confirm" color="#0d6efd">
+        Đồng ý
+    </swal-button>
+    <swal-param name="timer" value="3000" /> <swal-param name="allowEscapeKey" value="true" />
+    <swal-param name="customClass" value='{ "popup": "border-radius-15" }' />
+    </template> 
+
+    @push('scripts')
+        <script>
+        @if(session('message'))
+        Swal.fire({
+            template: "#create-success",
+            text: "{{ session('message') }}"
+        });
+        @endif
+
+        // function confirmDelete(userId){
+        //     const swalWithBootstrapButtons = Swal.mixin({
+        //     customClass: {
+        //         confirmButton: "btn btn-success",
+        //         cancelButton: "btn btn-danger"
+        //     },
+        //     buttonsStyling: false
+        //     });
+
+        //     swalWithBootstrapButtons.fire({
+        //         title: "Are you sure?",
+        //         text: "You won't be able to revert this!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonText: "Yes, delete it!",
+        //         cancelButtonText: "No, cancel!",
+        //         reverseButtons: true
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             var form = document.getElementById('delete-form');
+
+        //             var url = "";
+        //             form.action = url.replace(':id', userId);
+
+        //             form.submit();
+
+        //             swalWithBootstrapButtons.fire({
+        //                 title: "Deleted!",
+        //                 text: "Your file has been deleted.",
+        //                 icon: "success"
+        //             });
+        //         } else if (
+        //         result.dismiss === Swal.DismissReason.cancel
+        //         ) {
+        //             swalWithBootstrapButtons.fire({
+        //             title: "Cancelled",
+        //             text: "Your imaginary file is safe :)",
+        //             icon: "error"
+        //             });
+        //         }
+        //     });
+
+
+        // }
+
+        </script>    
+    @endpush
+    
