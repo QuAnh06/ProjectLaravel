@@ -59,11 +59,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth']) -> prefix('/user-lists') -> controller(UserController::class) -> group(function (){
     Route::get('/', 'index') -> name('user-lists');
-    Route::get('/create', 'create') -> name('user-lists.create');
+    Route::get('/create', 'create') -> name('user-lists.create') -> middleware(['admin']);
     Route::post('/', 'store') -> name('user-lists.store');
-    Route::get('/edit/{id}', 'edit') -> name('user-lists.edit');
+    Route::get('/edit/{id}', 'edit') -> name('user-lists.edit') -> middleware(['admin']);
     Route::put('/{id}', 'update') -> name('user-lists.update');
-    Route::get('/{id}/delete', 'destroy') -> name('user-lists.destroy');
+    Route::get('/{id}/delete', 'destroy') -> name('user-lists.destroy') -> middleware(['admin']);
 });
 
 
