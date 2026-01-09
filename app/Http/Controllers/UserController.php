@@ -16,7 +16,7 @@ class UserController extends Controller
     {
 
         $users = User::all(); 
-        return view('pages.Users.user-lists', compact('users'));
+        return view('Users.user-lists', compact('users'));
     }
 
     /**
@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.Users.create');
+        return view('Users.create');
     }
 
     /**
@@ -44,15 +44,16 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'status' => 1
         ]);
 
-        return redirect()->route('user-lists')->with('message', 'Thêm thành công');
+        return redirect()->route('user-lists')->with('message', 'Create user successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
     }
@@ -64,7 +65,7 @@ class UserController extends Controller
     {
         $user = DB::table('users') -> where('id', $id) -> first();
 
-        return view('pages.Users.edit', compact('user'));
+        return view('Users.edit', compact('user'));
     }
 
     /**
@@ -85,7 +86,7 @@ class UserController extends Controller
         'role' => $request->get('role'),
         'updated_at' => now()
     ]);
-        return redirect() -> route('user-lists');
+        return redirect() -> route('user-lists') -> with('message', 'Update user succeessfully!');
     }
 
     /**

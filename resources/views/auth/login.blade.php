@@ -52,8 +52,11 @@
                                 <label class="form-label fw-semibold">Mật khẩu</label>
                                 <a href="#" class="text-decoration-none small">Quên mật khẩu?</a>
                             </div>
-                            <input type="password" name="password" class="form-control form-control-lg" 
+                            <input type="password" name="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
                                    placeholder="••••••••" required>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3 form-check">
@@ -74,5 +77,33 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+});
+</script>
+
+@if (session('success'))
+<script>
+    Toast.fire({
+        icon: 'success',
+        title: @json(session('success'))
+    });
+</script>
+@endif
+
+
+
 </body>
 </html>

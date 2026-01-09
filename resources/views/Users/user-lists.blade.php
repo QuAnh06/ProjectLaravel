@@ -61,9 +61,9 @@
                                     <a href="{{ route('user-lists.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-light border" title="Sửa">
                                         <i class="fas fa-edit text-primary"></i>
                                     </a>
-                                    <a href="{{ route('user-lists.destroy', ['id' => $user->id]) }}" class="btn btn-sm btn-light border text-danger" title="Xóa" onclick="confirmDelete({{ $user->id }})"> {{--onclick="confirmDelete({{ $user->id }})">--}}
+                                    <button type="button" class="btn btn-sm btn-light border text-danger" onclick="confirmDelete({{ $user->id }})" title="Xóa">
                                         <i class="fas fa-trash"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -85,6 +85,10 @@
         </div>
     </div>
 </div>  
+<form id="delete-form" method="POST" style="display:none;">
+    @csrf
+    @method('DELETE')
+</form>
 
 @endsection
 
@@ -109,50 +113,38 @@
         });
         @endif
 
-        // function confirmDelete(userId){
-        //     const swalWithBootstrapButtons = Swal.mixin({
-        //     customClass: {
-        //         confirmButton: "btn btn-success",
-        //         cancelButton: "btn btn-danger"
-        //     },
-        //     buttonsStyling: false
-        //     });
+        function confirmDelete(userId){
+            const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-danger",
+                cancelButton: "btn btn-secondary"
+            },
+            buttonsStyling: false
+            });
 
-        //     swalWithBootstrapButtons.fire({
-        //         title: "Are you sure?",
-        //         text: "You won't be able to revert this!",
-        //         icon: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonText: "Yes, delete it!",
-        //         cancelButtonText: "No, cancel!",
-        //         reverseButtons: true
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             var form = document.getElementById('delete-form');
+            swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete",
+                cancelButtonText: "No, cancel",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = document.getElementById('delete-form');
 
-        //             var url = "";
-        //             form.action = url.replace(':id', userId);
+                    // var url = "{{ route('user-lists.destroy', 'id') }}";
+                    // form.action = url.replace('id', userId);
 
-        //             form.submit();
+                    form.action = "/user-lists/" + userId;
 
-        //             swalWithBootstrapButtons.fire({
-        //                 title: "Deleted!",
-        //                 text: "Your file has been deleted.",
-        //                 icon: "success"
-        //             });
-        //         } else if (
-        //         result.dismiss === Swal.DismissReason.cancel
-        //         ) {
-        //             swalWithBootstrapButtons.fire({
-        //             title: "Cancelled",
-        //             text: "Your imaginary file is safe :)",
-        //             icon: "error"
-        //             });
-        //         }
-        //     });
+                    form.submit();
+                    
+                } 
+            });
 
-
-        // }
+        }
 
         </script>    
     @endpush

@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-end gap-2 mt-3">
+                        <div class="d-flex justify-content-end gap-2 mt-5">
                             <a href="{{ route('user-lists') }}" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 8px;">
                                 Hủy bỏ
                             </a>

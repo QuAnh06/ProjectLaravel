@@ -68,7 +68,9 @@ Chứa tất cả các tệp cấu hình của ứng dụng.
       $table->timestamps()
 
    -- Chạy lệnh: `php artisan make:migration add_status_to_users_table` : thêm cột vào bảng
-                -> `php artisan migrate` : để cập nhật vào database.
+                -> `php artisan migrate` : để cập nhật vào database.  ( `php artisan migrate    --path=database/migrations/2024_01_01_000000_add_role_to_users_table.php` : update cho 1 bảng)
+                
+                -> `php artisan migrate:rollback` : undo thay đổi vừa chạy
 
    -- Chạy lệnh: `php artisan make:model Name -m` để tạo bảng (Migration), tạo `Models\`
 

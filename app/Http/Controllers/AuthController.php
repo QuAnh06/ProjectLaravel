@@ -17,14 +17,16 @@ class AuthController extends Controller
         $dataLogin = $request->validate([
             'email' => 'required|exists:users,email',
             'password' => 'required',
-        ]);
+        ], [
+        'email.exists' => 'Email này không tồn tại trong hệ thống.'
+    ]);
 
         if (Auth::attempt($dataLogin)) {
             $request->session()->regenerate();
             return redirect()->intended('index'); 
         }
 
-        return back()->withErrors(['email' => 'Email hoặc mật khẩu không đúng!'])->withInput();
+        return back()->withErrors(['password' => 'Mật khẩu cung cấp không chính xác.'])->withInput();
     }
 
     public function showRegister() {
@@ -41,7 +43,7 @@ class AuthController extends Controller
         DB::table('users')->insert([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => 'admin',
+            'role' => 'user',
             'status' => 1,
             'password' => Hash::make($request->password),
             'created_at' => now(),
