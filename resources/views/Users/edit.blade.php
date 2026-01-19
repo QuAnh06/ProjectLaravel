@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('user-lists.create')
+@section('user-lists')
     <div class="container-fluid py-5" style="background-color: #ffffff; min-height: 100vh; color: #000000;">
     <div class="row justify-content-center">
         <div class="col-lg-8">

@@ -1,23 +1,28 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Payment;
 
 Route::get('/', function(){
     return redirect()->route('login');
 });
 
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// Route::middleware('guest') -> group(function(){
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// });
  
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'prevent'])->group(function () {
     Route::get('/index', function(){
         return view('pages.index');
     })->name('index');
@@ -35,29 +40,17 @@ Route::middleware(['auth'])->group(function () {
     // ->middleware('AuthMiddleware::class');
 
 
-    Route::get('/application-lists', function(){
-        return view('pages.application-lists');
-    })->name('app-lists');
-
+    // Route::get('/application-lists', function(){
+    //     return view('pages.application-lists');
+    // })->name('app-lists');
 
     Route::get('/service-lists', function(){
         return view('pages.service-lists');
     })->name('service-lists');
 
-    Route::get('/payment-lists', function(){
-        return view('pages.payment-lists');
-    })->name('payment-lists');
-
 });
 
-// Route::get('/user-lists', function(){
-//     $users = User::latest()->paginate(10); 
-//     return view('pages.user-lists', compact('users'));
-// })->name('user-lists');
-
-// Route::get('/user-lists', [PageController::class, 'Users'])->name('user-lists'); 
-
-Route::middleware(['auth']) -> prefix('/user-lists') -> controller(UserController::class) -> group(function (){
+Route::middleware(['auth', 'prevent']) -> prefix('/user-lists') -> controller(UserController::class) -> group(function (){
     Route::get('/', 'index') -> name('user-lists');
     Route::get('/create', 'create') -> name('user-lists.create') -> middleware(['admin']);
     Route::post('/', 'store') -> name('user-lists.store');
@@ -67,6 +60,26 @@ Route::middleware(['auth']) -> prefix('/user-lists') -> controller(UserControlle
     ->name('user-lists.destroy') -> middleware(['admin']);
 });
 
+
+Route::middleware(['auth', 'prevent']) -> prefix('/apps') -> controller(AppController::class) -> group(function (){
+    Route::get('/', 'index') -> name('apps') -> middleware(['admin']);
+    Route::get('/create', 'create') -> name('apps.create') -> middleware(['admin']);
+    Route::post('/', 'store') -> name('apps.store');
+    Route::get('/edit/{id}', 'edit') -> name('apps.edit') -> middleware(['admin']);
+    Route::put('/{id}', 'update') -> name('apps.update');
+    Route::delete('/{id}', 'destroy')
+    ->name('apps.destroy') -> middleware(['admin']);
+});
+
+Route::middleware(['auth', 'prevent']) -> prefix('/payments') -> controller(PaymentController::class) -> group(function (){
+    Route::get('/', 'index') -> name('payments')->middleware(['admin']);
+    Route::get('/create', 'create') -> name('payments.create') -> middleware(['admin']);
+    Route::post('/', 'store') -> name('payments.store');
+    Route::get('/edit/{id}', 'edit') -> name('payments.edit') -> middleware(['admin']);
+    Route::put('/{id}', 'update') -> name('payments.update');
+    Route::delete('/{id}', 'destroy')
+    ->name('payments.destroy') -> middleware(['admin']);
+});
 
 Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, ['vi', 'en', 'jp'])) {

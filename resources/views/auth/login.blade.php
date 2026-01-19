@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 const Toast = Swal.mixin({
@@ -101,8 +101,7 @@ const Toast = Swal.mixin({
         title: @json(session('success'))
     });
 </script>
-@endif
-
+@endif --}}
 
 
 </body>

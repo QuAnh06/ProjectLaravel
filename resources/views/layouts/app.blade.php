@@ -23,8 +23,7 @@
         
         @yield('app-lists')
 
-        @yield('user-lists.create')
-        
+        @yield('payment-lists')
     </div>
 
     @include('components.footer')
@@ -36,7 +35,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     @stack('scripts')
-    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>

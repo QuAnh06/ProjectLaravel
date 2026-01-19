@@ -163,53 +163,6 @@ Chứa toàn bộ package được cài qua Composer. Không nên chỉnh sửa 
 
 Thường tuân theo mô hình **MVC (Model-View-Controller)**.
 
-### 4 file tối thiểu cần tác động:
-| Thành phần | Vị trí | Mục đích |
-|-----------|--------|---------|
-| **Route** | `routes/web.php` | Định nghĩa đường dẫn URL |
-| **Controller** | `app/Http/Controllers/` | Xử lí logic request |
-| **Model** | `app/Models/` | Giao tiếp với database |
-| **View** | `resources/views/` | Hiển thị giao diện |
-
----
-
-### **Ví dụ thực tế: Tạo chức năng "Bài viết" (Post)**
-
-#### **Bước 1️: Tạo Model, Migration và Controller cùng lúc**
-
-```bash
-php artisan make:model Post -mc
-```
--- Lệnh này tạo ra:
-  - File Model: `Post.php`
-  - File tạo bảng Database: Migration
-  - File Controller: `PostController.php`
-
----
-
-#### **Bước 2️: Định nghĩa Route**
-Mở `routes/web.php` và thêm:
-
-```php
-use App\Http\Controllers\PostController;
-Route::get('/posts', [PostController::class, 'index']);
-```
----
-
-#### **Bước 3️: Viết logic trong Controller**
-Mở `PostController.php`:
-
-```php
-public function index() {
-    $posts = Post::all(); // Lấy tất cả bài viết
-    return view('posts.index', compact('posts')); // Trả về giao diện
-}
-```
----
-
-#### **Bước 4️: Tạo giao diện**
-Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách bài viết.
-
 
 #### FLOW REQUEST → RESPONSE TRONG LARAVEL
 🌍 Trình duyệt: Nhấn nút "Lưu".
@@ -248,4 +201,19 @@ Tạo file `resources/views/posts/index.blade.php` để hiển thị danh sách
     return redirect()->route('home')->with('success', 'Chào mừng!'); // Dùng Redirect + Session
 }
 
-#### 
+#### Các loại quan hệ truy vấn:
+
+-- Quan hệ Một - Một (One-to-One):
+   - Tại Model chính (User):
+
+      public function profile() {
+      return $this->hasOne(Profile::class, 'user_id', 'id');
+   }
+   - Tại Model phụ (Profile - Nghịch đảo):
+
+   public function user() {
+      return $this->belongsTo(User::class, 'user_id', 'id');
+   }
+
+--Quan hệ Một - Nhiều (One-to-Many) : (hasMany, belongsTo)
+--Quan hệ Nhiều - Nhiều (Many-to-Many) : (belongsToMany, belongsToMany)

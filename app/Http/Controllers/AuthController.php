@@ -54,6 +54,7 @@ class AuthController extends Controller
 
     public function logout(Request $request) {
         // dd('Đã chạy vào hàm Logout thành công!');
+        
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

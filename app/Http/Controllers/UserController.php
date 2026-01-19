@@ -12,10 +12,23 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = User::query();
 
-        $users = User::all(); 
+        if($request->filled('search')){
+            $query->where(function ($sub) use ($request) {
+                $sub->where('name', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('role', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('email', "LIKE", "%{$request->search}%");
+            });
+        }
+
+        if($request->filled('status') && in_array($request->status, [0, 1])){
+            $query->where('status', $request->status);
+        }
+
+        $users = $query->paginate(10)->withQueryString(); // ->appends($request->all()); 
         return view('Users.user-lists', compact('users'));
     }
 
@@ -79,13 +92,16 @@ class UserController extends Controller
             'role' => 'required',
         ]);
 
-        DB::table('users') -> where('id', $id) -> update([
-        'name' => $request->get('name'),
-        'email' => $request->get('email'),
-        // 'password' => Hash::make($request->get('password')),
-        'role' => $request->get('role'),
-        'updated_at' => now()
-    ]);
+        // DB::table('users') -> where('id', $id) -> update([
+        //     'name' => $request->get('name'),
+        //     'email' => $request->get('email'),
+        //     // 'password' => Hash::make($request->get('password')),
+        //     'role' => $request->get('role'),
+        //     'updated_at' => now()
+        // ]);
+
+        User::findOrFail($id)->update($request->only('name', 'email', 'role', 'updated_at'));
+        
         return redirect() -> route('user-lists') -> with('message', 'Update user succeessfully!');
     }
 
@@ -95,6 +111,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         DB::table('users') -> where('id', $id) -> delete();
-        return back() -> with('message', "Delete user successfully");
+        return back() -> with('message', "Delete user successfully!");
     }
 }

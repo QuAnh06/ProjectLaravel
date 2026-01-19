@@ -3,14 +3,14 @@
                 <li class="menu-item {{ Request::is('home') ? 'active' : '' }} ">
                     <a href="{{ route('home') }}" class="menu-link active" aria-current="page"><i class="fas fa-home me-2"></i>Trang chủ</a>
                 </li>
-                <li class="menu-item {{ Request::is('application-lists*') ? 'active' : '' }}">
-                    <a href="{{ route('app-lists') }}" class="menu-link"><i class="fa-solid fa-table-cells-large"></i>Danh sách ứng dụng</a>
+                <li class="menu-item {{ Request::is('apps*') ? 'active' : '' }}">
+                    <a href="{{ route('apps') }}" class="menu-link"><i class="fa-solid fa-table-cells-large"></i>Danh sách ứng dụng</a>
                 </li>
                 <li class="menu-item {{ Request::is('service-lists*') ? 'active' : '' }}">
                     <a href="{{ route('service-lists')}}" class="menu-link"><i class="fa-solid fa-box"></i>Danh sách Gói dịch vụ</a>
                 </li>
-                <li class="menu-item {{ Request::is('payment-lists*') ? 'active' : '' }}">
-                    <a href="{{ route('payment-lists')}}" class="menu-link"><i class="fa-regular fa-credit-card"></i>Danh sách Gói thanh toán</a>
+                <li class="menu-item {{ Request::is('payments*') ? 'active' : '' }}">
+                    <a href="{{ route('payments')}}" class="menu-link"><i class="fa-regular fa-credit-card"></i>Danh sách Gói thanh toán</a>
                 </li>
                 <li class="menu-item {{ Request::is('user-lists*') ? 'active' : '' }}">
                     <a href="{{ route('user-lists')}}" class="menu-link"><i class="fa-solid fa-users"></i>Danh dách Người dùng</a>
@@ -28,14 +28,14 @@
                     <li class="menu-item {{ Request::is('home') ? 'active' : '' }} ">
                         <a href="{{ route('home') }}" class="menu-link active" aria-current="page"><i class="fas fa-home me-2"></i>Trang chủ</a>
                     </li>
-                    <li class="menu-item {{ Request::is('application-lists*') ? 'active' : '' }}">
-                        <a href="{{ route('app-lists') }}" class="menu-link"><i class="fa-solid fa-table-cells-large"></i>Danh sách ứng dụng</a>
+                    <li class="menu-item {{ Request::is('apps*') ? 'active' : '' }}">
+                        <a href="{{ route('apps') }}" class="menu-link"><i class="fa-solid fa-table-cells-large"></i>Danh sách ứng dụng</a>
                     </li>
                     <li class="menu-item {{ Request::is('service-lists*') ? 'active' : '' }}">
                         <a href="{{  route('service-lists') }}" class="menu-link"><i class="fa-solid fa-box"></i>Danh sách Gói dịch vụ</a>
                     </li>
-                    <li class="menu-item {{ Request::is('payment-lists*') ? 'active' : '' }}">
-                        <a href="{{ route('payment-lists')}}" class="menu-link"><i class="fa-regular fa-credit-card"></i>Danh sách Gói thanh toán</a>
+                    <li class="menu-item {{ Request::is('payments*') ? 'active' : '' }}">
+                        <a href="{{ route('payments')}}" class="menu-link"><i class="fa-regular fa-credit-card"></i>Danh sách Gói thanh toán</a>
                     </li>
                     <li class="menu-item {{ Request::is('user-lists*') ? 'active' : '' }}">
                         <a href="{{ route('user-lists')}}" class="menu-link"><i class="fa-solid fa-users"></i>Danh dách Người dùng</a>
