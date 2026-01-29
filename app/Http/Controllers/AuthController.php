@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($dataLogin)) {
             $request->session()->regenerate();
-            return redirect()->intended('index'); 
+            return redirect()->intended('apps'); 
         }
 
         return back()->withErrors(['password' => 'Mật khẩu cung cấp không chính xác.'])->withInput();
@@ -53,7 +53,6 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request) {
-        // dd('Đã chạy vào hàm Logout thành công!');
         
         Auth::logout();
         $request->session()->invalidate();

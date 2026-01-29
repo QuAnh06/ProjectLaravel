@@ -28,7 +28,7 @@
 
     @include('components.footer')
 
-    @if (!Route::is('user-lists.create') && !Route::is('user-lists.edit')) 
+    @if ( !Route::is('user-lists.edit')) <!-- !Route::is('user-lists.create') -->
         <script src="{{ asset('js/main.js') }}"></script>
     @endif
 

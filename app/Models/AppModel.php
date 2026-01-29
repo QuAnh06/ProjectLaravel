@@ -12,4 +12,8 @@ class AppModel extends Model
     use HasFactory, Notifiable;
     
     protected $fillable = ['name', 'code']; 
+
+    public function packages(){
+        return $this->hasMany(Payment::class, 'app_id');
+    }
 }

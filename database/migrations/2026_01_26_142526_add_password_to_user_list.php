@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('app_id')->after('id')->constrained('app_models')->onDelete('cascade');
-            $table->string('package');
-            $table->decimal('price', 10, 0);
-            $table->timestamps();
+        Schema::table('user_list', function (Blueprint $table) {
+            $table -> string('password');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::table('user_list', function (Blueprint $table) {
+            $table -> dropColumn('password');
+        });
     }
 };

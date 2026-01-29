@@ -4,9 +4,9 @@
 
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h2 fw-bold mb-0">Danh sách Người dùng</h2>
+        <h2 class="h2 fw-bold mb-0">{{ __('messages.users') }}</h2>
         <a href="{{ route('user-lists.create') }}" class="btn btn-primary shadow-sm d-flex align-items-center gap-2 fs-0.25">
-            <i class="fas fa-plus"></i> Thêm mới
+            <i class="fas fa-plus"></i> {{ __('messages.add_user') }}
         </a>
     </div>
 
@@ -15,26 +15,20 @@
 
             <form action="{{ route('user-lists') }}" method="GET">    
                 <div class="d-flex justify-content-between mb-3 gap-2">
-                    <div class="input-group w-50">
+                    <div class="input-group w-75">
                         <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" class="form-control border-start-0 ps-0" name="search"
-                            value="{{ request('search') }}" placeholder="Tìm tên, email...">
+                        <input type="text" class="form-control border-start-0 ps-0 " name="search"
+                            value="{{ request('search') }}" placeholder="{{ __('messages.search_in_user') }}">
                     </div>
                     <div class="d-flex gap-2">
-                        
-                        <select name="status" class="form-select form-select-sm" style="width: 160px;" >
-                            <option value="" disabled selected hidden>-- Trạng thái --</option>
-                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Online</option>
-                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Offline</option>
-                        </select>
                         
                         @if(request()->has('search') || request()->has('status'))
                             <a href="{{ route('user-lists') }}" class="btn btn-outline-danger">Xóa lọc</a>
                         @endif
 
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        <i class="fas fa-filter me-1"></i> Lọc
+                    <button type="submit" class="btn btn-primary ">
+                        <i class="fas fa-search me-1"></i> {{ __('messages.search') }}
                     </button>
                 </div>
             </form>
@@ -43,63 +37,61 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="ps-4">ID</th>
-                            <th>Họ và Tên</th>
-                            <th>Email</th>
-                            <th>Trạng thái</th>
-                            <th>Ngày tham gia</th>
-                            <th class="text-end pe-4">Thao tác</th>
+                            <th class="text-muted fw-normal">#</th>
+                            <th class="text-muted fw-normal">{{ __('messages.edit') }}</th>
+                            <th class="text-muted fw-normal">{{ __('messages.delete') }}</th>
+                            <th class="text-muted fw-normal">{{ __('messages.name') }}</th>
+                            <th class="text-muted fw-normal">Email</th>
+                            <th class="text-muted fw-normal">{{ __('messages.phone') }}</th>
+                            <th class="text-muted fw-normal">{{ __('messages.created_at') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($users as $user)
+                        @forelse($users as $index => $user)
                         <tr>
-                            <td class="ps-4 text-muted">{{ $user->id }}</td>
+                            <td class="text-muted">{{ $index + 1 }}</td>
                             <td>
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="avatar-sm bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 30px; height: 30px;">
-                                        {{ substr($user->name, 0, 1) }}
-                                    </div>
-                                    <span class="fw-semibold">{{ $user->name }}</span>
-                                </div>
+                                <a href="{{ route('user-lists.edit', $user->id) }}" class="btn btn-warning btn-sm text-white p-2" style="border-radius: 4px;">
+                                    <i class="fas fa-edit fa-fw"></i>
+                                </a>
                             </td>
-                            <td>{{ $user->email }}</td>
                             <td>
 
-                                {{-- @if(Auth::check() && $user->id === Auth::user()->id)
+                                <form id="delete-form" method="POST" style="display:none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+
+                                <button type="button" class="btn btn-danger btn-sm p-2" style="border-radius: 4px;" onclick="confirmDelete({{ $user->id }})">
+                                    <i class="fas fa-trash fa-fw"></i>
+                                </button>
+                            </td>
+                            <td> {{ $user->name }} </td>
+                            <td> {{ $user->email }}</td>
+                            <td>{{ !empty($user->phone) ? $user->phone : '---' }}</td>
+                            {{-- <td>
+
+                                @if(Auth::check() && $user->id === Auth::user()->id)
                                     <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">Online</span>
                                 @else
                                     <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">Offline</span>
-                                @endif --}}
+                                @endif
                             
                                 @if ($user->status == '1')
                                     <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">Online</span>
                                 @else
                                     <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">Offline</span>
                                 @endif
-                            </td>
+                            </td> --}}
+
                             <td class="text-muted">{{ $user->created_at->format('d/m/Y') }}</td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group">
-                                    <a href="{{ route('user-lists.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-light border" title="Sửa">
-                                        <i class="fas fa-edit text-primary"></i>
-                                    </a>
-                                    
-                                    <form id="delete-form" method="POST" style="display:none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                    
-                                    <button type="button" class="btn btn-sm btn-light border text-danger" onclick="confirmDelete({{ $user->id }})" title="Xóa">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
+                            
                         </tr>
+
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5 text-muted">
-                                <p>Không có kết quả người dùng được tìm kiếm.</p>
+                            <td colspan="7" class="text-center py-5 text-muted">
+                                <p>{{ __('messages.no_data') }}</p>
                             </td>
                         </tr>
                         @endforelse

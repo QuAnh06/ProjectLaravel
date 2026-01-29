@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
-class PreventBackHistory
+class SetLocale
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,10 @@ class PreventBackHistory
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $response = $next($request);
+        if (session()->has('locale')) {
+            App::setLocale(session()->get('locale'));
+        }
 
-        return $response->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
-            ->header('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
+        return $next($request);
     }
 }

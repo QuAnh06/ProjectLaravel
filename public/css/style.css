@@ -170,8 +170,13 @@ body {
     font-size: 1em;
 }
 
+.form-control::placeholder {
+    color: #adb5bd; 
+    opacity: 0.5;
+}
+
 .form-label{
-    font-size: 1.15rem;
+    font-size: 1.1rem;
 }
 
 .fw-bold{
@@ -244,3 +249,9 @@ footer{
     color: #0d6efd !important;
     font-weight: 600;
 }
+
+/* select:disabled {
+    background-color: #e9ecef; 
+    cursor: not-allowed;   
+    opacity: 0.3;
+} */

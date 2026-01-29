@@ -10,12 +10,12 @@
             <div class="d-flex align-items-center ms-auto header-icons-group">
 
                 @php
-                $currentLocale = session('locale', 'vi');
-                $languages = [
-                'vi' => ['name' => 'Tiếng Việt', 'flag' => 'vn.png'],
-                'en' => ['name' => 'English', 'flag' => 'united-kingdom.png'],
-                'jp' => ['name' => 'Japanese', 'flag' => 'japan.png'],
-                ];
+                    $currentLocale = session('locale', 'vi');
+                    $languages = [
+                    'vi' => ['name' => 'Tiếng Việt', 'flag' => 'vn.png'],
+                    'en' => ['name' => 'English', 'flag' => 'united-kingdom.png'],
+                    'jp' => ['name' => 'Japanese', 'flag' => 'japan.png'],
+                    ];
                 @endphp
 
                 <div class="dropdown">
@@ -29,7 +29,7 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         @foreach($languages as $key => $lang)
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-3 {{ $currentLocale == $key ? 'active' : '' }}" href="{{ route('lang.switch', $key) }}">
+                            <a class="dropdown-item d-flex align-items-center gap-3 {{ $currentLocale == $key ? 'active' : '' }}" href="{{ route('lang', $key) }}">
 
                                 <img src="{{ asset('assets/images/' . $lang['flag']) }}" width="18" class="rounded-sm">
 
@@ -55,14 +55,14 @@
                         <li>
                             <h6 class="dropdown-header">{{ Auth::user()->name }}</h6>
                         </li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Cài đặt tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> {{ __('messages.setting_acc') }}</a></li>
                         <li>
                             <hr>
                         </li>
                         <li>
                             @auth
                                 <a class="dropdown-item text-danger" href="{{ route('logout') }}" data-turbo="false">
-                                    <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
+                                    <i class="fas fa-sign-out-alt me-2"></i> {{ __('messages.logout') }}
                                 </a>
 
                             @endauth

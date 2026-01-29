@@ -4,19 +4,19 @@
 <div class="container-fluid py-4 px-3">
     <div class="row">
         <div class="col-12 px-4">
-            <h2 class="fw-bold mb-4">Danh sách Gói thanh toán</h2>
+            <h2 class="fw-bold mb-4">{{ __('messages.packages') }}</h2>
             
             
                 <form method="GET" class="row g-3">
                     <div class="col-md-9 d-flex">
-                        <input type="text" name="search" class="form-control" placeholder="Tìm theo tên, slug, tiền tệ..." value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control" placeholder="{{ __('messages.search_in_payment') }}" value="{{ request('search') }}">
                     </div>
                     <div class="col-md-3 d-flex gap-2">
                         <button type="submit" class="btn btn-primary w-100 ">
-                            <i class="fas fa-search me-1"></i> Tìm kiếm
+                            <i class="fas fa-search me-1"></i> {{ __('messages.search') }}
                         </button>
                         <a href="{{ route('payments.create') }}" class="btn btn-primary w-100">
-                            <i class="fas fa-plus me-1"></i> Thêm
+                            <i class="fas fa-plus me-1"></i> {{ __('messages.add') }}
                         </a>
                     </div>
                 </form>
@@ -28,11 +28,11 @@
                         <thead class="bg-light">
                             <tr>
                                 <th class="text-muted">#</th>
-                                <th class="text-muted">Chỉnh sửa</th>
-                                <th class="text-muted">Xóa</th>
-                                <th class="text-muted">Ứng dụng</th>
-                                <th class="text-muted">Tên gói</th>
-                                <th class="text-muted">Giá</th>
+                                <th class="text-muted">{{ __('messages.edit') }}</th>
+                                <th class="text-muted">{{ __('messages.delete') }}</th>
+                                <th class="text-muted">{{ __('messages.application') }}</th>
+                                <th class="text-muted">{{ __('messages.package_name') }}</th>
+                                <th class="text-muted">{{ __('messages.price') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +57,7 @@
                                     </form>
 
                                 </td>
-                                <td class="fw-bold">{{ $payment->name }}</td>
+                                <td class="fw-bold">{{ $payment->app->name }}</td>
                                 <td>{{ $payment->package }}</td>
                                 
                                 <td>
@@ -68,7 +68,7 @@
                             @empty
                                 <tr>
                                     <td colspan="6" class="text-center py-5 text-muted">
-                                        <p>Không có dữ liệu.</p>
+                                        <p>{{ __('messages.no_data') }}</p>
                                     </td>
                                 </tr>
 

@@ -85,4 +85,36 @@ document.addEventListener('DOMContentLoaded', function () {
         [appName, appCode].forEach(i=> i.classList.remove('is-invalid'));
       });
     }
+
+    const createServiceCheckbox = document.getElementById('createService');
+    const appSelect = document.getElementById('app_select');
+    const packageSelect = document.getElementById('package_select');
+
+    function checkbox(){
+        if (createServiceCheckbox.checked) {
+            appSelect.disabled = false;
+            packageSelect.disabled = false;
+        } else {
+            appSelect.disabled = true;
+            packageSelect.disabled = true;
+
+            appSelect.value = "";
+            packageSelect.value = "";
+
+            appSelect.classList.remove('is-invalid');
+            packageSelect.classList.remove('is-invalid');
+        }
+    }
+
+    createServiceCheckbox.addEventListener('change', checkbox);
+
+    checkbox();
+    //-Giải thích tại sao thêm hàm checkbox ở cuối:  Nhờ hàm old('create_service'), ô checkbox vẫn được tích chọn.
+
+    // Vấn đề: Trình duyệt khi load lại sẽ mặc định các ô < select > ở trạng thái disabled(khóa) như đã viết trong HTML.
+
+    // Giải pháp: Khi bạn gọi handleToggle() ở cuối file JS, ngay khi trang vừa hiện lên, 
+    // nó sẽ chạy kiểm tra: checkbox đang tích (do old giữ lại), vậy phải mở khóa các ô select.
+
+
   });

@@ -3,8 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use \App\Http\Middleware\AdminMiddleware;
+use Illuminate\Auth\Middleware\Authenticate;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PreventBackHistory;
+use App\Http\Middleware\SetLocale;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,10 +23,14 @@ return Application::configure(basePath: dirname(__DIR__))
         // $middleware -> append(MyLastCheck::class)         // Đki Global
 
         $middleware -> alias([
+            'auth' => Authenticate::class,
             'admin' => AdminMiddleware::class,
             'prevent' => PreventBackHistory::class
         ]);
-
+        
+        $middleware->web(append: [
+            SetLocale::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

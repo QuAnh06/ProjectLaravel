@@ -56,7 +56,7 @@
                                 @enderror
                             </div> --}}
 
-                            <div class="col-md-6 mb-4">
+                            {{-- <div class="col-md-6 mb-4">
                                 <label class="form-label fw-semibold text-dark">Vai trò</label>
                                 <select name="role" class="form-select custom-input-white">
                                     <option value="user"  {{ $user->role == 'user' ? 'selected' : '' }}> 
@@ -65,12 +65,12 @@
                                     <option value="admin"  {{ $user->role == 'admin' ? 'selected' : '' }}>
                                         Quản trị viên</option>
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-3">
                             <a href="{{ route('user-lists') }}" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 8px;">
-                                Hủy bỏ
+                                Hủy
                             </a>
                             <button type="submit" class="btn btn-primary px-4 py-2" style="border-radius: 8px; background-color: #0d6efd;">
                                 <i class="fas fa-save me-2"></i> Cập nhật

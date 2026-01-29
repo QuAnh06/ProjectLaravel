@@ -11,19 +11,19 @@
 <div class="container-fluid py-4 px-3">
     <div class="row">
         <div class="col-12 px-4">
-            <h2 class="fw-bold mb-4">Quản lý Apps</h2>
+            <h2 class="fw-bold mb-4">{{ __('messages.manage_apps') }}</h2>
             
             
             <form method="GET" class="row ">
                 <div class="col-md-9 d-flex">
-                    <input type="text" name="search" class="form-control" placeholder="Tìm theo tên, code..." > {{-- value="{{ request('search') }}" --}}
+                    <input type="text" name="search" class="form-control" placeholder="{{ __('messages.search_in_apps') }}" > {{-- value="{{ request('search') }}" --}}
                 </div>
                 <div class="col-md-3 d-flex gap-2">
                     <button type="submit" class="btn btn-primary w-100 ">
-                        <i class="fas fa-search me-1"></i> Tìm kiếm
+                        <i class="fas fa-search me-1"></i> {{ __('messages.search') }}
                     </button>
                     <a href="{{ route('apps.create') }}" class="btn btn-primary w-100">
-                        <i class="fas fa-plus me-1"></i> Thêm
+                        <i class="fas fa-plus me-1"></i> {{ __('messages.add') }}
                     </a>
                 </div>
             </form>
@@ -35,11 +35,11 @@
                         <thead class="bg-light">
                             <tr>
                                 <th class="text-muted">#</th>
-                                <th class="text-muted">Chỉnh sửa</th>
-                                <th class="text-muted">Xóa</th>
-                                <th class="text-muted">Tên App</th>
+                                <th class="text-muted">{{ __('messages.edit') }}</th>
+                                <th class="text-muted">{{ __('messages.delete') }}</th>
+                                <th class="text-muted">{{ __('messages.app_name') }}</th>
                                 <th class="text-muted">App Code</th>
-                                <th class="text-muted">Ngày tạo</th>
+                                <th class="text-muted">{{ __('messages.created_at') }}</th>
                             </tr>
                         </thead>
                         <tbody>

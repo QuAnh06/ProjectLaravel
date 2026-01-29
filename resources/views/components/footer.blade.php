@@ -1,3 +1,3 @@
     <footer>
-        <i class="fa-regular fa-copyright"></i> 2025 SSO Server - Hệ thống đăng nhập một lần
+        <i class="fa-regular fa-copyright"></i> {{ __('messages.footer') }}
     </footer>

@@ -9,7 +9,7 @@
             @method('PUT')
 
             <div class="mb-3">
-                <label>Tên App</label>
+                <label>{{ __('messages.app_name') }}</label>
                 <input type="text" name="name" class="form-control 
                     @error('name') is-invalid @enderror" value="{{ $app->name }}" required>
                 
@@ -28,8 +28,8 @@
                 @enderror
 
             </div>
-            <button type="submit" class="btn btn-primary">Lưu lại</button>
-            <a href="{{ route('apps') }}" class="btn btn-secondary">Hủy</a>
+            <button type="submit" class="btn btn-primary">{{ __('messages.update') }}</button>
+            <a href="{{ route('apps') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
         </form>
     </div>
 </div>

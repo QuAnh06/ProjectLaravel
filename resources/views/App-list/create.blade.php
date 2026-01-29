@@ -5,8 +5,8 @@
             <div class="container-fluid">
                 
                 <div class="content-header">
-                    <h2 class="mb-0 fw-bold">Tạo App mới</h2>
-                    <a href="{{ route('apps') }}" class="back"><i class="fas fa-arrow-left me-1"></i> Quay lại</a>
+                    <h2 class="mb-0 fw-bold">{{ __('messages.create_app') }}</h2>
+                    <a href="{{ route('apps') }}" class="back"><i class="fas fa-arrow-left me-1"></i> {{ __('messages.back') }}</a>
                 </div>
 
                 <div class="card shadow-sm border-0">
@@ -16,7 +16,7 @@
                                 
                                 @csrf
 
-                                <label for="appName" class="form-label fw-bold"> Tên App <span class="text-danger">*</span></label>
+                                <label for="appName" class="form-label fw-bold"> {{ __('messages.app_name') }} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" 
                                     name="name" id="appName" placeholder="Ví dụ: My Application">
                                 
@@ -33,12 +33,12 @@
                                 @error('code')
                                     <div class="invalid-feedback"> {{ $message }} </div>
                                 @enderror
-                                <div class="form-text text-muted small">Mã định danh duy nhất cho app (chỉ chấp nhận chữ cái, số, dấu gạch ngang và gạch dưới)</div>
+                                <div class="form-text text-muted small">{{ __('messages.small') }}</div>
                             </div>
 
                             <div class="d-flex justify-content-end mt-5">
-                                <a href="{{ route('apps') }}" class="btn btn-secondary">Hủy</a>
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-check me-1"></i> Tạo mới</button>
+                                <a href="{{ route('apps') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-check me-1"></i> {{ __('messages.create') }}</button>
                             </div>
                         </form>
                     </div>
